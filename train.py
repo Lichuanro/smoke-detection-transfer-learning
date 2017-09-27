@@ -7,7 +7,7 @@ from keras.layers import Activation, Dropout, Flatten, Dense
 def train(X_train, y_train, X_validation, y_validation):
 
     # get the vgg model
-    vgg = applications.vgg19.VGG19(include_top=False, weights='imagenet', input_shape=(224, 224, 3))
+    vgg = applications.vgg16.VGG16(include_top=False, weights='imagenet', input_shape=(224, 224, 3))
 
     # add the dense layers to the base vgg model
     x = vgg.output
@@ -16,6 +16,7 @@ def train(X_train, y_train, X_validation, y_validation):
     x = Dropout(0.5)(x)
     x = Dense(1024, activation='relu')(x)
     x = Dropout(0.5)(x)
+    
     predictions = Dense(1, activation='sigmoid')(x)
 
     model = Model(inputs=vgg.input, outputs=predictions)
